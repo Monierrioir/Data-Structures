@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+void insertion(int arr[], int size);
+void print(int arr[], int size);
+
+int main() {
+    int arr[] = {7, 3, 5, 8, 2, 9, 4, 15, 6};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    insertion(arr, size);
+    print(arr, size);
+
+    return 0;
+}
+
+void insertion(int arr[], int size) {
+    int i, k, key;
+    for (i = 1; i < size; i++) {
+        key = arr[i];
+        k = i - 1;
+
+        // Move elements of arr[0..i-1] that are greater than key
+        // to one position ahead of their current position
+        for (;k>=0 && key <=arr[k];k--)
+        arr[k+1]=arr[k];
+        arr[k + 1] = key;
+    }
+}
+
+void print(int arr[], int size) {
+    printf("The sorted array is:\n");
+    for (int a = 0; a < size; a++) {
+        printf("%d\n", arr[a]);
+    }
+}

@@ -1,0 +1,39 @@
+#include <stdio.h>
+void selection(int arr[],int size){
+ int i,j,small;
+
+ for(i=0;i<size-1;i++){
+     small=i;
+     for(j=i+1;j<size;j++)
+
+         if (arr[j] < arr[small])
+             small = j;
+         int temp = arr[small];
+         arr[small] = arr[i];
+         arr[i] = temp;
+
+ }
+
+}
+int main() {
+    int size;
+printf("Please enter the lenght of array: \n");
+    scanf("%d",&size);
+
+    int arr[size];
+
+    printf("Please enter the element of array: \n");
+
+    for(int b=0;b<size;b++){
+        printf("arr[%d]: ",b);
+        scanf("%d",&arr[b]);
+    }
+
+
+    printf("The sorted array is: \n");
+    selection(arr,size);
+    for(int a=0;a<size;a++) {
+        printf("%d\n", arr[a]);
+    }
+    return 0;
+}

@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+void quick(int arr[], int left, int right) {
+    int i, j, k, temp;
+
+    i = left;
+    j = right;
+    k = arr[(left + right) / 2];
+
+    do {
+        while (arr[i] < k && i < right)
+            i++;
+        while (arr[j] > k && j > left)
+            j--;
+
+        if (i <= j) {
+            temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;  // Increment i instead of k
+            j--;
+        }
+    } while (i <= j);
+
+    if (left < j)
+        quick(arr, left, j);
+    if (i < right)
+        quick(arr, i, right);
+}
+
+int main() {
+    int arr[] = {7, 3, 5, 9, 8, 1};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    printf("The sorted array is: \n");
+    quick(arr, 0, size - 1);
+    for (int f = 0; f < size; f++) {
+        printf("%d\n", arr[f]);
+    }
+
+    return 0;
+}

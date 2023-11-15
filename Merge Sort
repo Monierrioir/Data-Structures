@@ -1,56 +1,55 @@
 #include <stdio.h>
+void merge(int arr[],int left,int k,int right,int size);
+void mergesort(int arr[],int left,int right,int size){
+    int k;
+    if(left<right){
+        k=(left+right)/2;
+        mergesort(arr,left,k,size);
+        mergesort(arr,k+1,right,size);
 
-void merge(int arr[], int left, int mid, int right);
-void mergesort(int arr[], int left, int right);
-
-void mergesort(int arr[], int left, int right) {
-    if (left < right) {
-        int mid = left + (right - left) / 2;  // Fix: Calculate mid without potential overflow
-        mergesort(arr, left, mid);
-        mergesort(arr, mid + 1, right);
-        merge(arr, left, mid, right);
+        merge(arr,left,k,right,size);
     }
 }
+void merge(int arr[],int left,int k,int right,int size){
+    int i,j,l=0;
 
-void merge(int arr[], int left, int mid, int right) {
-    int size = right - left + 1;  // Fix: Calculate the size of the temporary array
-    int i, j, k = 0;
-    int temp[size];  // Temporary array
+    int a[size];
 
-    for (i = left, j = mid + 1; i <= mid && j <= right; ) {
-        if (arr[i] < arr[j]) {
-            temp[k] = arr[i];
+    for(i=left,j=k+1; (i<=k) && (j<=right) ;){
+        if(arr[i]<arr[j]){
+            a[l]=arr[i];
             i++;
-        } else {
-            temp[k] = arr[j];
-            j++;
+            l++;
         }
-        k++;
-    }
+        else{
+            a[l]=arr[j];
+            j++;
+            l++;
+        }
 
-    while (i <= mid) {
-        temp[k] = arr[i];
+    }
+    while (i<=k){
+        a[l]=arr[i];
         i++;
-        k++;
+        l++;
     }
-    while (j <= right) {
-        temp[k] = arr[j];
+    while (j<=right){
+        a[l]=arr[j];
         j++;
-        k++;
+        l++;
     }
-
-    for (i = left, k = 0; i <= right; i++, k++)
-        arr[i] = temp[k];
+    for(i=left, l=0; i<=right; i++, l++)
+        arr[i]=a[l];
 }
+
 
 int main() {
-    int arr[] = {7, 5, 8, 1, 3};
-    int right = sizeof(arr) / sizeof(arr[0]) - 1;
-    mergesort(arr, 0, right);
-
-    for (int a = 0; a <= right; a++) {
-        printf("%d\n", arr[a]);
+   int arr[]={38,16,27,39,12,27};
+   int size= sizeof(arr)/ sizeof(arr[0]);
+   printf("The sorted array is: \n");
+    mergesort(arr,0,size-1,size);
+    for(int b=0;b<size;b++){
+        printf("%d\n",arr[b]);
     }
-
     return 0;
 }

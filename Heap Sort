@@ -1,0 +1,65 @@
+#include <stdio.h>
+void heapify(int arr[], int size, int i);
+void buildHeap(int arr[], int n);
+void heapSort(int arr[], int n);
+int right(int i);
+
+int left(int i) {
+    return 2 * i + 1;
+}
+
+int right(int i) {
+    return 2 * i + 2;
+}
+int heap_size;
+
+void heapify(int arr[], int size, int i) {
+    int left_child, right_child, max, temp;
+    left_child = left(i);
+    right_child = right(i);
+
+    if (left_child <= size && arr[left_child] > arr[i])
+        max = left_child;
+    else
+        max = i;
+
+    if (right_child <= size && arr[right_child] > arr[max])
+        max = right_child;
+
+    if (max != i) {
+        temp = arr[max];
+        arr[max] = arr[i];
+        arr[i] = temp;
+        heapify(arr, size, max);
+    }
+}
+
+void buildHeap(int arr[], int n) {
+    int i;
+    heap_size = n - 1;
+    for (i = (n - 1) / 2; i >= 0; i--)
+        heapify(arr, n - 1, i);
+}
+
+void heapSort(int arr[], int n) {
+    int i, temp;
+    buildHeap(arr, n);
+    for (i = n - 1; i >= 1; i--) {
+        temp = arr[i];
+        arr[i] = arr[0];
+        arr[0] = temp;
+        heap_size--;
+        heapify(arr, i - 1, 0);
+    }
+}
+
+int main() {
+    int arr[] = {38, 16, 27, 39, 12, 27};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    printf("The sorted array is: \n");
+    heapSort(arr, size);
+    for (int b = 0; b < size; b++) {
+        printf("%d\n", arr[b]);
+    }
+    return 0;
+}

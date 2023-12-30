@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node{
+    int data;
+    struct node *next;
+}node;
+
+struct node *first=NULL;
+struct node *last=NULL;
+
+int insertion(int data){
+    node *new=(node *) malloc(sizeof(node));
+    if(new==NULL){
+        printf("Memory failed\n");//not enough memory available
+        return -1;
+    }
+        new->data=data;
+        new->next=NULL;
+
+        if(first==NULL){
+            first=new;
+            last=new;
+            new->next=NULL;
+        }
+        else{
+            last->next=new;
+            last=new;
+            last->next=NULL;
+        }
+    return 0;
+}
+void print(){
+
+    node *index=first;
+    while(index!=NULL){
+        printf("%d\n",index->data);
+        index=index->next;
+    }
+}
+int delete(int data){
+    node *prev=NULL;
+    node *index=first;
+
+    //Linked list is empty
+    if(first==NULL){
+        printf("List is empty.\n");
+        return 1;
+    }
+//Delete head node
+    if(first->data==data){
+        node *t=first;
+        first=first->next;
+        free(t);
+        return 1;
+    }
+    //Search in linked list
+    while (index!=NULL && index->data!=data){
+        prev=index;
+        index=index->next;
+    }
+    //Data not found
+    prev->next=index->next;
+
+    // Delete last node
+    if(last->data==data){
+        last=prev;
+    }
+    //Clean memory
+    free(index);
+    return 0;
+}
+
+int main() {
+    insertion(1);
+    insertion(45);
+    insertion(8);
+    insertion(6);
+    print();
+    printf("-----------\n");
+    delete(45);
+    print();
+    printf("-----------\n");
+    insertion(89);
+    print();
+    printf("-----------\n");
+    delete(1);
+    print();
+
+    return 0;
+}
